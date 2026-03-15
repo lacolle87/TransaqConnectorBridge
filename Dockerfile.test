@@ -1,0 +1,29 @@
+FROM alpine:3.22
+
+RUN apk add --no-cache cmake make mingw-w64-gcc g++ git wine gnutls
+
+ENV WINEDEBUG=-all
+ENV WINEPREFIX=/root/.wine
+ENV XDG_RUNTIME_DIR=/tmp/runtime-root
+
+RUN mkdir -p /tmp/runtime-root && chmod 700 /tmp/runtime-root && \
+    wine wineboot --init 2>/dev/null; \
+    wineserver --wait 2>/dev/null || true
+
+WORKDIR /build
+COPY CMakeLists.txt ./
+COPY src/ src/
+COPY tests/ tests/
+
+RUN mkdir build && cd build && \
+    cmake .. \
+        -DCMAKE_SYSTEM_NAME=Windows \
+        -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
+        -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DBUILD_TESTS=ON && \
+    make -j$(nproc)
+
+WORKDIR /build/build
+
+CMD ["sh", "-c", "wine ./tests/test_protocol.exe && wine ./tests/test_tcp_server.exe && wine ./tests/test_logger.exe && wine ./tests/test_config.exe && wine ./tests/test_ring_buffer.exe"]

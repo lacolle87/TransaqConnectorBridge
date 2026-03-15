@@ -1,0 +1,43 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "ide",
+      "displayName": "IDE (CLion navigation only)",
+      "description": "Local profile for code navigation and test visibility. Not for actual builds.",
+      "binaryDir": "${sourceDir}/cmake-build-ide",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTS": "ON"
+      }
+    },
+    {
+      "name": "cross-release",
+      "displayName": "Docker: Cross-compile Release",
+      "description": "For use inside Docker only (MinGW)",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/cmake-build-cross-release",
+      "cacheVariables": {
+        "CMAKE_SYSTEM_NAME": "Windows",
+        "CMAKE_C_COMPILER": "x86_64-w64-mingw32-gcc",
+        "CMAKE_CXX_COMPILER": "x86_64-w64-mingw32-g++",
+        "CMAKE_BUILD_TYPE": "Release",
+        "BUILD_TESTS": "OFF"
+      }
+    },
+    {
+      "name": "cross-debug",
+      "displayName": "Docker: Cross-compile Debug + Tests",
+      "description": "For use inside Docker only (MinGW + Wine)",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/cmake-build-cross-debug",
+      "cacheVariables": {
+        "CMAKE_SYSTEM_NAME": "Windows",
+        "CMAKE_C_COMPILER": "x86_64-w64-mingw32-gcc",
+        "CMAKE_CXX_COMPILER": "x86_64-w64-mingw32-g++",
+        "CMAKE_BUILD_TYPE": "Debug",
+        "BUILD_TESTS": "ON"
+      }
+    }
+  ]
+}

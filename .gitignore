@@ -1,0 +1,44 @@
+# CLion project files
+.idea/
+*.iml
+cmake-build-debug/
+cmake-build-release/
+cmake-build-*/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Compiled object files
+*.o
+*.obj
+*.so
+*.a
+*.lib
+*.dll
+*.exe
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage and debug
+*.gcda
+*.gcno
+*.gcov
+*.prof
+
+# External dependencies (if vendored)
+# /external/
+
+# Backup files
+*~
+/tmp_build/

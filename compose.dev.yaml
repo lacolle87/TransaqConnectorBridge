@@ -1,0 +1,20 @@
+services:
+  tcbridge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: tcbridge
+    environment:
+      - TZ=Europe/Moscow
+      - WINEDEBUG=-all
+    volumes:
+      - ./config.ini:/usr/bin/config.ini
+      - ./logs:/usr/bin/logs
+    expose:
+      - "9090"
+
+networks:
+  default:
+    external: true
+    name: tcbridge_net

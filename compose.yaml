@@ -1,0 +1,18 @@
+services:
+  tcbridge:
+    image: registry.gitlab.com/lacolle87/cr/tcbridge:latest
+    restart: always
+    container_name: tcbridge
+    environment:
+      - TZ=Europe/Moscow
+      - WINEDEBUG=-all
+    volumes:
+      - ./config.ini:/usr/bin/config.ini
+      - ./logs:/usr/bin/logs
+    expose:
+      - "9999:9999"
+
+networks:
+  default:
+    external: true
+    name: utts-network
